@@ -20,7 +20,7 @@ StarComp.propTypes = {
     message : PropTypes.array
 }
 
-export default function StarComp({ maxRating = 5, fill = "orange", message = [] }) {
+export default function StarComp({ maxRating = 5, fill = "orange", message = [], onSetRating }) {
     const [rating, setRating] = useState(0)
     const [hoveredRating, setHoveredRating] = useState(0)
 
@@ -34,8 +34,10 @@ export default function StarComp({ maxRating = 5, fill = "orange", message = [] 
 
     function handleRating(x){
      setRating(x)
+    onSetRating(x)
+    // console.log(x, "inisde star comp")
     }
-    console.log(hoveredRating)
+    // console.log(hoveredRating)
 
     return (
         <div style={containerStyle}>
