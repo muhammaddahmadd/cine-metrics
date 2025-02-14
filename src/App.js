@@ -1,4 +1,4 @@
-import { children, useEffect, useState } from "react";
+import { children, use, useEffect, useState } from "react";
 import StarRating from "./StarRating"
 const tempMovieData = [
   {
@@ -68,6 +68,8 @@ export default function App() {
     setSelectedId("")
   }
 
+
+
   function handleAddWatched(movie) {
     // console.log(movie, "getting a movie here")
     //    const check = watched.some(mov=> mov.imdbID === movie.imdbID)
@@ -77,11 +79,11 @@ export default function App() {
 
   }
   useEffect(() => {
-    
- 
-      const controller = new AbortController()
-    
-    
+
+
+    const controller = new AbortController()
+
+
     async function fetchedData() {
 
       try {
@@ -109,7 +111,7 @@ export default function App() {
       setMovies(tempMovieData)
     }
 
-    return ()=>{
+    return () => {
       controller.abort()
     }
   }, [query]); // Added `query` as a dependency
@@ -243,8 +245,8 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
   const [movieLoader, setMovieLoader] = useState(false)
   const [userRating, setUserRating] = useState("")
   const isWatched = watched.some(mov => mov.imdbID === selectedID)
-  const watchedRating = watched.find(mov=> mov.imdbID === selectedID)?.userRating
-  console.log(watchedRating,"watched user rating")
+  const watchedRating = watched.find(mov => mov.imdbID === selectedID)?.userRating
+  console.log(watchedRating, "watched user rating")
   console.log(isWatched)
 
   const { Title: title, Genre: genre, Language: lang, Actors: actors, Poster: poster, Runtime: runTime, imdbRating: movieRating } = movieDetail;
@@ -267,13 +269,15 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
   }, [selectedID])
 
 
-  useEffect(()=> {
-    // if(!title) return
-  document.title = `Movie | ${title}`
 
-  return function(){
-    document.title = "CineMetrics"
-  }
+
+  useEffect(() => {
+    // if(!title) return
+    document.title = `Movie | ${title}`
+
+    return function () {
+      document.title = "CineMetrics"
+    }
   }, [title])
 
 
@@ -290,6 +294,21 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
     onAddWatched(newWatchedMovie)
     setSelectedId("")
   }
+
+  useEffect(() => {
+    function callBack(e) {
+      if (e.code === "Escape") {
+        goBack();
+        console.log("Side effect running to go back");
+      }
+    }
+
+    window.addEventListener("keydown", callBack);
+
+    return () => {
+      window.removeEventListener("keydown", callBack);
+    };
+  }, [goBack]); 
 
   return <div className="details">
     {movieLoader ? <Loader /> :
@@ -397,8 +416,8 @@ function WatchedSummary({ watched }) {
 
 
 function WatchedList({ watched, setWatched }) {
-  function handleWatchedDel(id){
-  setWatched(watched=> watched.filter(mov=> mov.imdbID !== id))
+  function handleWatchedDel(id) {
+    setWatched(watched => watched.filter(mov => mov.imdbID !== id))
   }
 
   return <ul className="list">
@@ -419,9 +438,9 @@ function WatchedList({ watched, setWatched }) {
             <span>⏳</span>
             <span>{movie.runTime} min</span>
           </p>
-          <button className="btn-delete" onClick={()=>handleWatchedDel(movie.imdbID)}>X</button>
+          <button className="btn-delete" onClick={() => handleWatchedDel(movie.imdbID)}>X</button>
         </div>
-        
+
       </li>
     ))}
   </ul>
