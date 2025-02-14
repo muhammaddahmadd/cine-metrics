@@ -105,10 +105,13 @@ export default function App() {
       }
     }
 
-    if (query.length > 3) fetchedData();
+    if (query.length > 3){
+      goBack()
+      fetchedData();
+    }
     else {
       setError("")
-      setMovies(tempMovieData)
+      setMovies([])
     }
 
     return () => {
@@ -121,7 +124,7 @@ export default function App() {
     <>
       <NavBar>
         <Logo />
-        <Search query={query} setQuery={setQuery} />
+        <Search setSelectedId={setSelectedId} query={query} setQuery={setQuery} />
         <Results movies={movies} />
       </NavBar>
       <Main>
@@ -196,7 +199,7 @@ function Results({ movies }) {
   );
 }
 
-function Search({ query, setQuery }) {
+function Search({ query, setQuery, setSelectedId }) {
   function clearSearch() {
     setQuery("")
   }
@@ -210,7 +213,7 @@ function Search({ query, setQuery }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      {query.length > 0 && <button className="search-close" onClick={clearSearch}>x</button>}
+      {query.length > 0 && <button className="btn-back " onClick={clearSearch}>x</button>}
     </div>
   );
 }
@@ -316,11 +319,13 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
         <header>
           <button onClick={goBack} className="btn-back">&larr;</button>
           <img src={poster} alt="" />
+          <div className="details-overview">
           <p>Title: {title}</p>
           <p>Genre: {genre}</p>
           <p>Language: {lang}</p>
           <p>Run Time:{runTime}</p>
           <p>Actors: {actors}</p>
+          </div>
         </header>
         <section>
 

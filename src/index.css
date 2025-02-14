@@ -89,6 +89,20 @@ body {
 
 }
 
+.search-bar button {
+      background: #ffffffd6;
+    position: absolute;
+    right: 3px !important;
+    left: unset;
+    /* opacity: 50%; */
+    width: 20px;
+    height: 20px;
+    top: 12px;
+    aspect-ratio: 2 / 3;
+    font-size: 15px;
+    font-weight: 500;
+
+}
 
 /* ******* */
 
