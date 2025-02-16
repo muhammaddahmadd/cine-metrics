@@ -1,4 +1,4 @@
-import { children, use, useEffect, useState } from "react";
+import { children, use, useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating"
 const tempMovieData = [
   {
@@ -51,12 +51,14 @@ const Key = "2e04425d"
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [query, setQuery] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [selectedID, setSelectedId] = useState(null)
-
+  const [watched, setWatched] = useState(()=> {
+    const watched = localStorage.getItem("watched");
+    return JSON.parse(watched)
+  });
 
 
 
@@ -78,6 +80,11 @@ export default function App() {
     setWatched(watched => [...watched, movie])
 
   }
+
+  useEffect(()=> {
+    localStorage.setItem("watched", JSON.stringify(watched))
+  }, [watched])
+
   useEffect(() => {
 
 
@@ -199,10 +206,32 @@ function Results({ movies }) {
   );
 }
 
-function Search({ query, setQuery, setSelectedId }) {
+function Search({ query, setQuery }) {
   function clearSearch() {
     setQuery("")
   }
+  const inputEl = useRef(null);
+  useEffect(() => {
+    function onEnter(e) {
+      if (document.activeElement === inputEl.current) return;
+
+      if (e.code === "Enter") {
+        inputEl.current.focus();
+        setQuery("");
+      }
+    }
+
+    document.addEventListener("keydown", onEnter);
+
+    return () => {
+      document.removeEventListener("keydown", onEnter); // ✅ Correctly removes the event listener
+    };
+  }, [setQuery]); // ✅ Dependency array includes `setQuery`
+
+  // useEffect(()=> {
+  //   const search = document.querySelector(".search")
+  //   search.focus()
+  // },[])
 
   return (
     <div className="search-bar">
@@ -212,6 +241,7 @@ function Search({ query, setQuery, setSelectedId }) {
         placeholder="Search movies..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        ref={inputEl}
       />
       {query.length > 0 && <button className="btn-back " onClick={clearSearch}>x</button>}
     </div>
