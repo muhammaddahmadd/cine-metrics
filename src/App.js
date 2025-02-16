@@ -2,6 +2,7 @@ import { children,  useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating"
 import { useMovies } from "./useMovie";
 import { useLocalStorage } from "./useLocalStorage";
+import { useKey } from "./useKey";
 // const tempMovieData = [
 //   {
 //     imdbID: "tt1375666",
@@ -157,22 +158,24 @@ function Search({ query, setQuery }) {
     setQuery("")
   }
   const inputEl = useRef(null);
-  useEffect(() => {
-    function onEnter(e) {
-      if (document.activeElement === inputEl.current) return;
+  useKey("Enter", onEnter )
 
-      if (e.code === "Enter") {
-        inputEl.current.focus();
-        setQuery("");
-      }
-    }
+  function onEnter() {
+    inputEl.current.focus();
+    if (document.activeElement === inputEl.current) return;
+      setQuery("");
+    
+  }
 
-    document.addEventListener("keydown", onEnter);
-    inputEl.current.focus()
-    return () => {
-      document.removeEventListener("keydown", onEnter); // ✅ Correctly removes the event listener
-    };
-  }, [setQuery]); // ✅ Dependency array includes `setQuery`
+  // useEffect(() => {
+ 
+
+  //   document.addEventListener("keydown", onEnter);
+  //   inputEl.current.focus()
+  //   return () => {
+  //     document.removeEventListener("keydown", onEnter); // ✅ Correctly removes the event listener
+  //   };
+  // }, [setQuery]); 
 
   // useEffect(()=> {
   //   const search = document.querySelector(".search")
@@ -287,20 +290,22 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
     setSelectedId("")
   }
 
-  useEffect(() => {
-    function callBack(e) {
-      if (e.code === "Escape") {
-        goBack();
-        console.log("Side effect running to go back");
-      }
-    }
 
-    window.addEventListener("keydown", callBack);
+  useKey("Escape", goBack)
+  // useEffect(() => {
+  //   function callBack(e) {
+  //     if (e.code === "Escape") {
+  //       goBack();
+  //       console.log("Side effect running to go back");
+  //     }
+  //   }
 
-    return () => {
-      window.removeEventListener("keydown", callBack);
-    };
-  }, [goBack]); 
+  //   window.addEventListener("keydown", callBack);
+
+  //   return () => {
+  //     window.removeEventListener("keydown", callBack);
+  //   };
+  // }, [goBack]); 
 
   return <div className="details">
     {movieLoader ? <Loader /> :

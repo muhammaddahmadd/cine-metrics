@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 
 
-export function useMovies(query, Key, callBack) {
+export function useMovies(query, Key) {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
@@ -34,13 +34,15 @@ export function useMovies(query, Key, callBack) {
             }
         }
 
-        if (query.length < 3) {
-            callBack?.()
+        if (query.length > 3) {
+            fetchedData();
+          
+        }
+        else {
             setMovies([])
             setError("")
         }
-
-            fetchedData();
+            
             
       
 
