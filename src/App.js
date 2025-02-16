@@ -245,7 +245,7 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
     async function getMovieDetail() {
       try {
         setMovieLoader(true)
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${Key}&i=${selectedID}`)
+        const res = await fetch(`https://www.omdbapi.com/?apikey=${Key}&i=${selectedID}`)
         if (!res.ok) throw new Error("Error occured fetching details")
         const data = await res.json()
         setMovieDetail(data)
