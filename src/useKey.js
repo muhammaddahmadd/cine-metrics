@@ -3,9 +3,9 @@ export function useKey(keyValue, callBack) {
     useEffect(() => {
         function handleKeyPress(e) {
             if (e.code.toLowerCase() === keyValue.toLowerCase()) {
-                console.log(e.code)
+                // console.log(e.code)
                 callBack?.();
-                console.log("Side effect running to go back");
+                // console.log("Side effect running to go back");
             }
         }
 

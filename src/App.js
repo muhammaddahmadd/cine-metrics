@@ -236,11 +236,11 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
     if(userRating) ratingCount.current += 1;
   }, [userRating])
 
-  console.log(watchedRating, "watched user rating")
-  console.log(isWatched)
+  // console.log(watchedRating, "watched user rating")
+  // console.log(isWatched)
 
   const { Title: title, Genre: genre, Language: lang, Actors: actors, Poster: poster, Runtime: runTime, imdbRating: movieRating } = movieDetail;
-  console.log(selectedID)
+  // console.log(selectedID)
   useEffect(() => {
     async function getMovieDetail() {
       try {
@@ -250,7 +250,7 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
         const data = await res.json()
         setMovieDetail(data)
       } catch (err) {
-        console.log(err.message)
+        // console.log(err.message)
       } finally {
         setMovieLoader(false)
       }
@@ -285,7 +285,7 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
       userDecisions: ratingCount.current
 
     }
-    console.log(newWatchedMovie,"use ref resut")
+    // console.log(newWatchedMovie,"use ref resut")
     onAddWatched(newWatchedMovie)
     setSelectedId("")
   }
