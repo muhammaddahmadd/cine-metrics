@@ -167,20 +167,6 @@ function Search({ query, setQuery }) {
     
   }
 
-  // useEffect(() => {
- 
-
-  //   document.addEventListener("keydown", onEnter);
-  //   inputEl.current.focus()
-  //   return () => {
-  //     document.removeEventListener("keydown", onEnter); // ✅ Correctly removes the event listener
-  //   };
-  // }, [setQuery]); 
-
-  // useEffect(()=> {
-  //   const search = document.querySelector(".search")
-  //   search.focus()
-  // },[])
 
   return (
     <div className="search-bar">
@@ -292,20 +278,7 @@ function MovieDetails({ goBack, selectedID, onAddWatched, watched, setSelectedId
 
 
   useKey("Escape", goBack)
-  // useEffect(() => {
-  //   function callBack(e) {
-  //     if (e.code === "Escape") {
-  //       goBack();
-  //       console.log("Side effect running to go back");
-  //     }
-  //   }
 
-  //   window.addEventListener("keydown", callBack);
-
-  //   return () => {
-  //     window.removeEventListener("keydown", callBack);
-  //   };
-  // }, [goBack]); 
 
   return <div className="details">
     {movieLoader ? <Loader /> :
