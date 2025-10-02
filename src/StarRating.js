@@ -36,7 +36,7 @@ export default function StarComp({ maxRating = 5, fill = "orange", message = [],
     onSetRating(x)
     // console.log(x, "inisde star comp")
     }
-    // console.log(hoveredRating)
+    
 
     return (
         <div style={containerStyle}>
