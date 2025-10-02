@@ -34,7 +34,7 @@ export default function StarComp({ maxRating = 5, fill = "orange", message = [],
     function handleRating(x){
      setRating(x)
     onSetRating(x)
-    // console.log(x, "inisde star comp")
+   
     }
     
 
