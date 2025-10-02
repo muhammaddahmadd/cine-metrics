@@ -10,7 +10,6 @@ const containerStyle = {
 
 const starContainerStyle = {
     display: "flex",
-
 };
 
 
